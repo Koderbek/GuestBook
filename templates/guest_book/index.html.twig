@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}GuestBook index{% endblock %}
+
+{% block body %}
+    <h1>GuestBook index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Text</th>
+                <th>CreatedAt</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for guest_book in guest_books %}
+            <tr>
+                <td>{{ guest_book.username }}</td>
+                <td>{{ guest_book.email }}</td>
+                <td>{{ guest_book.text }}</td>
+                <td>{{ guest_book.createdAt }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('guest_book_new') }}">Create new</a>
+{% endblock %}

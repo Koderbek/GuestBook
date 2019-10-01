@@ -41,7 +41,7 @@ class GuestBook
 
     /**
      * @var string
-     * @ORM\Column(type="string", unique=true)
+     * @ORM\Column(type="string")
      * @Assert\NotBlank(message="Заполните поле")
      */
     protected $username;
