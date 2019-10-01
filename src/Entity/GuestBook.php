@@ -14,7 +14,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * Class GuestBook
  * @package App\Entity
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\GuestBookRepository")
  * @UniqueEntity("username", message="Данный username уже зарегистрирован")
  */
 class GuestBook

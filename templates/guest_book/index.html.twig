@@ -4,7 +4,21 @@
 
 {% block body %}
     <h1>GuestBook index</h1>
-
+    {% set queryParams = app.request.query.all %}
+    {% if queryParams %}
+        {% set sort = queryParams.sort %}
+        {% if sort == 'ASC' %}
+            {% set sort = 'DESC' %}
+        {% elseif sort == 'DESC' %}
+            {% set sort = 'ASC' %}
+        {% endif %}
+    {% endif %}
+    <div class="list-group">
+        <a class="list-group-item active" href="#">Filter</a>
+        <a class="list-group-item" href="{{ path('guest_book_index', {'filter':'username', 'sort': sort}) }}">Username</a>
+        <a class="list-group-item" href="{{ path('guest_book_index', {'filter':'email', 'sort': sort}) }}">Email</a>
+        <a class="list-group-item" href="{{ path('guest_book_index', {'filter':'createdAt', 'sort': sort}) }}">Date</a>
+    </div>
     <table class="table">
         <thead>
             <tr>
@@ -20,7 +34,7 @@
                 <td>{{ guest_book.username }}</td>
                 <td>{{ guest_book.email }}</td>
                 <td>{{ guest_book.text }}</td>
-                <td>{{ guest_book.createdAt }}</td>
+                <td>{{ guest_book.createdAt|date('d-m-Y') }}</td>
             </tr>
         {% else %}
             <tr>

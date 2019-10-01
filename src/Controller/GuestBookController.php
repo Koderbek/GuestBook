@@ -10,16 +10,31 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * Class GuestBookController
+ * @package App\Controller
+ *
+ * @Route("/guest-book")
+ */
 class GuestBookController extends AbstractController
 {
     /**
      * @Route("/", name="guest_book_index", methods={"GET"})
      */
-    public function index(): Response
+    public function index(Request $request): Response
     {
-        $guestBooks = $this->getDoctrine()
-            ->getRepository(GuestBook::class)
-            ->findAll();
+        $filter = $request->getQueryString();
+        if ($filter) {
+            parse_str($filter,$filterArray);
+            $guestBooks = $this->getDoctrine()
+                ->getRepository(GuestBook::class)
+                ->findByFilter($filterArray);
+        } else {
+            $guestBooks = $this->getDoctrine()
+                ->getRepository(GuestBook::class)
+                ->findAll();
+        }
+
 
         return $this->render('guest_book/index.html.twig', [
             'guest_books' => $guestBooks,
